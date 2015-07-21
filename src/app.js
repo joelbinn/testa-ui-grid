@@ -31,6 +31,7 @@ app.controller('MainCtrl', ['$scope', '$http', '$timeout', '$q', '$interval', 'u
   function($scope, $http, $timeout, $q, $interval, uiGridConstants) {
     $scope.reviewColumnsVisible = true;
     $scope.userInfoColumnsVisible = true;
+    $scope.numberOfItems = 0;
     $scope.gridOptions = {
       infiniteScrollRowsFromEnd: 40,
       infiniteScrollUp: true,
@@ -103,8 +104,8 @@ app.controller('MainCtrl', ['$scope', '$http', '$timeout', '$q', '$interval', 'u
 
     $scope.data = [];
 
-    $scope.firstPage = 2;
-    $scope.lastPage = 2;
+    $scope.firstPage = 0;
+    $scope.lastPage = 0;
 
     $scope.delete = function(grid, row, col) {
       console.log('delete entity in row: ', row, ', col: ', col, ', entity: ', row.entity);
@@ -130,11 +131,14 @@ app.controller('MainCtrl', ['$scope', '$http', '$timeout', '$q', '$interval', 'u
       var promise = $q.defer();
       $http.get('https://cdn.rawgit.com/angular-ui/ui-grid.info/gh-pages/data/10000_complex.json')
         .success(function(data) {
+          $scope.numberOfItems = data.length;
           $scope.lastPage++;
           var newData = $scope.getPage(data, $scope.lastPage);
           $scope.gridApi.infiniteScroll.saveScrollPercentage();
           $scope.data = $scope.data.concat(newData);
-          $scope.gridApi.infiniteScroll.dataLoaded($scope.firstPage > 0, $scope.lastPage < 4).then(function() {
+          console.debug('Add Down, Data length: ', $scope.data.length);
+          $scope.gridApi.infiniteScroll.dataLoaded($scope.firstPage > 0, $scope.lastPage < $scope.numberOfItems).then(function() {
+            console.debug('Add Down, Check Up');
             $scope.checkDataLength('up');
           }).then(function() {
             promise.resolve();
@@ -155,11 +159,14 @@ app.controller('MainCtrl', ['$scope', '$http', '$timeout', '$q', '$interval', 'u
       var promise = $q.defer();
       $http.get('https://cdn.rawgit.com/angular-ui/ui-grid.info/gh-pages/data/10000_complex.json')
         .success(function(data) {
+          $scope.numberOfItems = data.length;
           $scope.firstPage--;
           var newData = $scope.getPage(data, $scope.firstPage);
           $scope.gridApi.infiniteScroll.saveScrollPercentage();
           $scope.data = newData.concat($scope.data);
-          $scope.gridApi.infiniteScroll.dataLoaded($scope.firstPage > 0, $scope.lastPage < 4).then(function() {
+          console.debug('Add Up, Data length: ', $scope.data.length);
+          $scope.gridApi.infiniteScroll.dataLoaded($scope.firstPage > 0, $scope.lastPage < $scope.numberOfItems).then(function() {
+            console.debug('Add Up, Check Down');
             $scope.checkDataLength('down');
           }).then(function() {
             promise.resolve();
@@ -192,25 +199,27 @@ app.controller('MainCtrl', ['$scope', '$http', '$timeout', '$q', '$interval', 'u
 
         if (discardDirection === 'up') {
           $scope.data = $scope.data.slice(100);
+          console.debug('Remove Up, Data length: ', $scope.data.length);
           $scope.firstPage++;
           $timeout(function() {
             // wait for grid to ingest data changes
-            $scope.gridApi.infiniteScroll.dataRemovedTop($scope.firstPage > 0, $scope.lastPage < 4);
+            $scope.gridApi.infiniteScroll.dataRemovedTop($scope.firstPage > 0, $scope.lastPage < $scope.numberOfItems);
           });
         } else {
           $scope.data = $scope.data.slice(0, 400);
+          console.debug('Remove Down, Data length: ', $scope.data.length);
           $scope.lastPage--;
           $timeout(function() {
             // wait for grid to ingest data changes
-            $scope.gridApi.infiniteScroll.dataRemovedBottom($scope.firstPage > 0, $scope.lastPage < 4);
+            $scope.gridApi.infiniteScroll.dataRemovedBottom($scope.firstPage > 0, $scope.lastPage < $scope.numberOfItems);
           });
         }
       }
     };
 
     $scope.reset = function() {
-      $scope.firstPage = 2;
-      $scope.lastPage = 2;
+      $scope.firstPage = 0;
+      $scope.lastPage = 0;
 
       // turn off the infinite scroll handling up and down - hopefully this won't be needed after @swalters scrolling changes
       $scope.gridApi.infiniteScroll.setScrollDirections(false, false);
@@ -219,7 +228,7 @@ app.controller('MainCtrl', ['$scope', '$http', '$timeout', '$q', '$interval', 'u
       $scope.getFirstData().then(function() {
         $timeout(function() {
           // timeout needed to allow digest cycle to complete,and grid to finish ingesting the data
-          $scope.gridApi.infiniteScroll.resetScroll($scope.firstPage > 0, $scope.lastPage < 4);
+          $scope.gridApi.infiniteScroll.resetScroll($scope.firstPage > 0, $scope.lastPage < $scope.numberOfItems);
         });
       });
     };
