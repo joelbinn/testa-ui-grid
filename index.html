@@ -29,12 +29,6 @@
                             title="Save changes">
                         <i class="fa fa-floppy-o"></i>
                     </button>
-                    <button id="showCol"
-                            class="button btn btn-info btn-sm"
-                            ng-click="showAllColumns()"
-                            title="Show all columns">
-                        <i class="fa fa-table"></i>
-                    </button>
                     <button id="toggleInfo"
                             class="button btn btn-info btn-sm"
                             ng-click="toggleUserInfoColumns()"
@@ -48,6 +42,12 @@
                             ng-class="{'btn-info':reviewColumnsVisible,'btn-default':!reviewColumnsVisible}"
                             title="Toggle review columns">
                         <i class="fa fa-eye"></i>
+                    </button>
+                    <button id="showCol"
+                            class="button btn btn-success btn-sm"
+                            ng-click="showAllColumns()"
+                            title="Show all columns">
+                        <i class="fa fa-table"></i>
                     </button>
                     <button id="reset"
                             class="button btn btn-danger btn-sm"
