@@ -1,0 +1,80 @@
+<!doctype html>
+<html ng-app="app">
+
+    <head>
+        <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.css"/>
+        <link rel="stylesheet" href="/style/app.css"/>
+        <link rel="stylesheet" type="text/css" href="node_modules/angular-ui-grid/ui-grid.css">
+        <link rel="stylesheet" href="/font-awesome-4.3.0/css/font-awesome.css">
+        <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.css"/>
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+    </head>
+
+    <body ng-cloak>
+        <nav class="navbar navbar-default">
+            <a class="navbar-brand" href="#"><span><img height="32" src="/images/labblogo.png"></span>&nbsp;&nbsp;
+                <strong>JoeLabS</strong></a>
+        </nav>
+        <div class="container">
+            <h1>UI-Grid Table</h1>
+
+            <div ng-controller="MainCtrl">
+                <div class="margin-top margin-bottom">
+                    <button id="save"
+                            class="button btn btn-default btn-sm"
+                            ng-click="save(grid)"
+                            ng-disabled="!isDirty()"
+                            ng-class="{'btn-info':isDirty(),'btn-default':!isDirty()}"
+                            title="Save changes">
+                        <i class="fa fa-floppy-o"></i>
+                    </button>
+                    <button id="showCol"
+                            class="button btn btn-info btn-sm"
+                            ng-click="showAllColumns()"
+                            title="Show all columns">
+                        <i class="fa fa-table"></i>
+                    </button>
+                    <button id="toggleInfo"
+                            class="button btn btn-info btn-sm"
+                            ng-click="toggleUserInfoColumns()"
+                            ng-class="{'btn-info':userInfoColumnsVisible,'btn-default':!userInfoColumnsVisible}"
+                            title="Toggle user info columns">
+                        <i class="fa fa-user"></i>
+                    </button>
+                    <button id="toggleReview"
+                            class="button btn btn-info btn-sm"
+                            ng-click="toggleReviewColumns()"
+                            ng-class="{'btn-info':reviewColumnsVisible,'btn-default':!reviewColumnsVisible}"
+                            title="Toggle review columns">
+                        <i class="fa fa-eye"></i>
+                    </button>
+                    <button id="reset"
+                            class="button btn btn-danger btn-sm"
+                            ng-click="reset()"
+                            title="Reset data">
+                        <i class="fa fa-step-backward"></i>
+                    </button>
+                </div>
+                <!--div ui-grid="gridOptions" class="grid" ui-grid-infinite-scroll ui-grid-edit ui-grid-row-edit ui-grid-cellNav></div-->
+                <div ui-grid="gridOptions"
+                     class="grid"
+                     ui-grid-infinite-scroll
+                     ui-grid-edit
+                     ui-grid-row-edit
+                     ui-grid-cellnav
+                     ui-grid-resize-columns></div>
+                <div ng-if="loading" class="loader"><img src="/images/spinner.gif"></div>
+                <span>First page: {{ firstPage }} &nbsp; &nbsp; Last page: {{ lastPage }}  &nbsp; &nbsp; data.length: {{ data.length }} </span>
+            </div>
+        </div>
+
+        <script src="node_modules/jquery/dist/jquery.js"></script>
+        <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="node_modules/angular/angular.js"></script>
+        <script src="node_modules/angular-touch/angular-touch.js"></script>
+        <script src="node_modules/angular-animate/angular-animate.js"></script>
+        <script src="node_modules/angular-ui-grid/ui-grid.js"></script>
+        <script src="src/app.js"></script>
+    </body>
+
+</html>

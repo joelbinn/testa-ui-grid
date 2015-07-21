@@ -1,0 +1,45 @@
+.clickable {
+    cursor: pointer;
+}
+
+.loader {
+    z-index: 1000;
+    height: 64px;
+    width: 64px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: -32px;
+    margin-left: -32px;
+}
+
+.margin-top {
+    margin-top: 6px;
+}
+
+.margin-bottom {
+    margin-bottom: 6px;
+}
+
+
+.grid {
+    width: 100%;
+    height: 400px;
+}
+
+* {
+    font-family: "Arial", Helvetica, sans-serif;
+}
+
+.ui-grid-row-dirty .ui-grid-cell {
+    color: blue;
+}
+
+.ui-grid-row-saving .ui-grid-cell {
+    color: grey;
+}
+
+.ui-grid-row-error .ui-grid-cell {
+    color: red;
+}
+
