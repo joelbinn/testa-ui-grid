@@ -12,6 +12,7 @@
     </head>
 
     <body ng-cloak>
+        <div ng-if="loading" class="loader"><img src="/images/spinner.gif"></div>
         <nav class="navbar navbar-default">
             <a class="navbar-brand" href="#"><span><img height="32" src="/images/labblogo.png"></span>&nbsp;&nbsp;
                 <strong>JoeLabS</strong></a>
@@ -58,15 +59,18 @@
                         <i class="fa fa-step-backward"></i>
                     </button>
                 </div>
-                <!--div ui-grid="gridOptions" class="grid" ui-grid-infinite-scroll ui-grid-edit ui-grid-row-edit ui-grid-cellNav></div-->
-                <div ui-grid="gridOptions"
-                     class="grid"
-                     ui-grid-infinite-scroll
-                     ui-grid-edit
-                     ui-grid-row-edit
-                     ui-grid-cellnav
-                     ui-grid-resize-columns></div>
-                <div ng-if="loading" class="loader"><img src="/images/spinner.gif"></div>
+                <div context-menu menu-list="contextMenu"
+                     click-menu="clickItem(item)" >
+                    <div ui-grid="gridOptions"
+                         class="grid"
+                         ui-grid-infinite-scroll
+                         ui-grid-edit
+                         ui-grid-row-edit
+                         ui-grid-cellnav
+                         ui-grid-resize-columns
+                         ui-grid-selection                            >
+                    </div>
+                </div>
                 <span>First page: {{ firstPage }} &nbsp; &nbsp; Last page: {{ lastPage }}  &nbsp; &nbsp; data.length:
                     {{ data.length }}  &nbsp; &nbsp; total.length: {{ numberOfItems}}</span>
             </div>
@@ -79,6 +83,7 @@
         <script src="node_modules/angular-animate/angular-animate.js"></script>
         <script src="node_modules/angular-ui-grid/ui-grid.js"></script>
         <script src="src/app.js"></script>
+        <script src="src/contextMenu.js"></script>
     </body>
 
 </html>

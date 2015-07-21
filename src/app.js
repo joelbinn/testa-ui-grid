@@ -1,4 +1,4 @@
-var app = angular.module('app', ['ngTouch', 'ui.grid', 'ui.grid.infiniteScroll', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.cellNav', 'ui.grid.resizeColumns']);
+var app = angular.module('app', ['ngTouch', 'ui.grid', 'ui.grid.infiniteScroll', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.cellNav', 'ui.grid.resizeColumns', 'ui.grid.selection']);
 app.filter('mapFruit', function() {
   var genderHash = {
     1: 'Banan',
@@ -29,10 +29,17 @@ app.filter('mapBeer', function() {
 });
 app.controller('MainCtrl', ['$scope', '$http', '$timeout', '$q', '$interval', 'uiGridConstants',
   function($scope, $http, $timeout, $q, $interval, uiGridConstants) {
+    $scope.clickItem = function(item) {
+      console.debug('Clicked: ', item);
+      console.log('Selection: ', $scope.gridApi.selection.getSelectedGridRows());
+    };
+    $scope.contextMenu = [{name: 'Kost1'},{name: 'Kost2'}];
+
     $scope.userInfoColumnsVisible = true;
     $scope.reviewColumnsVisible = false;
     $scope.numberOfItems = 0;
     $scope.gridOptions = {
+      multiSelect: true,
       infiniteScrollRowsFromEnd: 40,
       infiniteScrollUp: true,
       infiniteScrollDown: true,
