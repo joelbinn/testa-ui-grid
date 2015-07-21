@@ -29,8 +29,8 @@ app.filter('mapBeer', function() {
 });
 app.controller('MainCtrl', ['$scope', '$http', '$timeout', '$q', '$interval', 'uiGridConstants',
   function($scope, $http, $timeout, $q, $interval, uiGridConstants) {
-    $scope.reviewColumnsVisible = true;
     $scope.userInfoColumnsVisible = true;
+    $scope.reviewColumnsVisible = false;
     $scope.numberOfItems = 0;
     $scope.gridOptions = {
       infiniteScrollRowsFromEnd: 40,
@@ -242,6 +242,8 @@ app.controller('MainCtrl', ['$scope', '$http', '$timeout', '$q', '$interval', 'u
 
     $scope.showAllColumns = function() {
       console.log('Show columns');
+      $scope.userInfoColumnsVisible = true;
+      $scope.reviewColumnsVisible = true;
       $scope.gridOptions.columnDefs.forEach(function(cd){
         cd.visible=true;
       });
@@ -275,6 +277,13 @@ app.controller('MainCtrl', ['$scope', '$http', '$timeout', '$q', '$interval', 'u
         return $scope.gridApi.rowEdit.getDirtyRows().length > 0;
       }
       return false;
+    };
+
+    $scope.columnsAreFiltered = function() {
+
+      return $scope.gridOptions === undefined || $scope.gridOptions.columnDefs.filter(function(cd){
+          return cd.visible === false;
+      }).length > 0;
     };
 
     $scope.getFirstData().then(function() {

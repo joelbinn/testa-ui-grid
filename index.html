@@ -22,30 +22,32 @@
             <div ng-controller="MainCtrl">
                 <div class="margin-top margin-bottom">
                     <button id="save"
-                            class="button btn btn-default btn-sm"
+                            class="button btn btn-sm"
                             ng-click="save(grid)"
                             ng-disabled="!isDirty()"
-                            ng-class="{'btn-info':isDirty(),'btn-default':!isDirty()}"
+                            ng-class="{'btn-success':isDirty(),'btn-default':!isDirty()}"
                             title="Save changes">
                         <i class="fa fa-floppy-o"></i>
                     </button>
                     <button id="toggleInfo"
-                            class="button btn btn-info btn-sm"
+                            class="button btn btn-sm"
                             ng-click="toggleUserInfoColumns()"
                             ng-class="{'btn-info':userInfoColumnsVisible,'btn-default':!userInfoColumnsVisible}"
                             title="Toggle user info columns">
                         <i class="fa fa-user"></i>
                     </button>
                     <button id="toggleReview"
-                            class="button btn btn-info btn-sm"
+                            class="button btn btn-sm"
                             ng-click="toggleReviewColumns()"
                             ng-class="{'btn-info':reviewColumnsVisible,'btn-default':!reviewColumnsVisible}"
                             title="Toggle review columns">
                         <i class="fa fa-eye"></i>
                     </button>
                     <button id="showCol"
-                            class="button btn btn-success btn-sm"
+                            class="button btn btn-sm"
                             ng-click="showAllColumns()"
+                            ng-class="{'btn-success':columnsAreFiltered(),'btn-default':!columnsAreFiltered()}"
+                            ng-disabled="!columnsAreFiltered()"
                             title="Show all columns">
                         <i class="fa fa-table"></i>
                     </button>
