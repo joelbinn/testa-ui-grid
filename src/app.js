@@ -116,6 +116,7 @@ app.controller('MainCtrl', ['$scope', '$http', '$timeout', '$q', '$interval', 'u
       var promise = $q.defer();
       $http.get('https://cdn.rawgit.com/angular-ui/ui-grid.info/gh-pages/data/10000_complex.json')
         .success(function(data) {
+          $scope.numberOfItems = data.length;
           var newData = $scope.getPage(data, $scope.lastPage);
           $scope.data = $scope.data.concat(newData);
           promise.resolve();
@@ -131,7 +132,6 @@ app.controller('MainCtrl', ['$scope', '$http', '$timeout', '$q', '$interval', 'u
       var promise = $q.defer();
       $http.get('https://cdn.rawgit.com/angular-ui/ui-grid.info/gh-pages/data/10000_complex.json')
         .success(function(data) {
-          $scope.numberOfItems = data.length;
           $scope.lastPage++;
           var newData = $scope.getPage(data, $scope.lastPage);
           $scope.gridApi.infiniteScroll.saveScrollPercentage();
@@ -159,7 +159,6 @@ app.controller('MainCtrl', ['$scope', '$http', '$timeout', '$q', '$interval', 'u
       var promise = $q.defer();
       $http.get('https://cdn.rawgit.com/angular-ui/ui-grid.info/gh-pages/data/10000_complex.json')
         .success(function(data) {
-          $scope.numberOfItems = data.length;
           $scope.firstPage--;
           var newData = $scope.getPage(data, $scope.firstPage);
           $scope.gridApi.infiniteScroll.saveScrollPercentage();
@@ -219,7 +218,7 @@ app.controller('MainCtrl', ['$scope', '$http', '$timeout', '$q', '$interval', 'u
 
     $scope.reset = function() {
       $scope.firstPage = 0;
-      $scope.lastPage = 0;
+      $scope.lastPage = 2;
 
       // turn off the infinite scroll handling up and down - hopefully this won't be needed after @swalters scrolling changes
       $scope.gridApi.infiniteScroll.setScrollDirections(false, false);
